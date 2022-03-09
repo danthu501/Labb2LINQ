@@ -10,7 +10,7 @@ namespace Labb2LINQ.Model
         public string Förnamn { get; set; }
         public string  Efternamn { get; set; }
         public Kurs Kursen { get; set; }
-        
+        public Ämne Ämnen { get; set; }
 
     }
 }

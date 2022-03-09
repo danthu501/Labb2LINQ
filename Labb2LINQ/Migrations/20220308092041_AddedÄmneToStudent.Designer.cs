@@ -4,14 +4,16 @@ using Labb2LINQ.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Labb2LINQ.Migrations
 {
     [DbContext(typeof(DBContextLabb2LINQ))]
-    partial class DBContextLabb2LINQModelSnapshot : ModelSnapshot
+    [Migration("20220308092041_AddedÄmneToStudent")]
+    partial class AddedÄmneToStudent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,12 +54,7 @@ namespace Labb2LINQ.Migrations
                     b.Property<string>("Förnamn")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ÄmneId")
-                        .HasColumnType("int");
-
                     b.HasKey("LärareID");
-
-                    b.HasIndex("ÄmneId");
 
                     b.ToTable("Lärare");
                 });
@@ -105,18 +102,29 @@ namespace Labb2LINQ.Migrations
                     b.ToTable("Ämnen");
                 });
 
+            modelBuilder.Entity("Labb2LINQ.Model.ÄmneLärare", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("LärarId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ÄmneId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ÄmneLärares");
+                });
+
             modelBuilder.Entity("Labb2LINQ.Model.Kurs", b =>
                 {
                     b.HasOne("Labb2LINQ.Model.Lärare", "Lärare")
                         .WithMany()
                         .HasForeignKey("LärareID");
-                });
-
-            modelBuilder.Entity("Labb2LINQ.Model.Lärare", b =>
-                {
-                    b.HasOne("Labb2LINQ.Model.Ämne", null)
-                        .WithMany("Lärarna")
-                        .HasForeignKey("ÄmneId");
                 });
 
             modelBuilder.Entity("Labb2LINQ.Model.Student", b =>

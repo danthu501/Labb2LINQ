@@ -11,8 +11,8 @@ namespace Labb2LINQ.Model
         public int LärareID { get; set; }
         public string Förnamn { get; set; }
         public string Efternamn { get; set; }
-        
-        
+       
+
 
 
     }

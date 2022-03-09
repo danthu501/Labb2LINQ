@@ -4,14 +4,16 @@ using Labb2LINQ.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Labb2LINQ.Migrations
 {
     [DbContext(typeof(DBContextLabb2LINQ))]
-    partial class DBContextLabb2LINQModelSnapshot : ModelSnapshot
+    [Migration("20220308131023_Test3")]
+    partial class Test3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,6 +105,24 @@ namespace Labb2LINQ.Migrations
                     b.HasKey("ÄmneId");
 
                     b.ToTable("Ämnen");
+                });
+
+            modelBuilder.Entity("Labb2LINQ.Model.ÄmneLärare", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("LärarId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ÄmneId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ÄmneLärares");
                 });
 
             modelBuilder.Entity("Labb2LINQ.Model.Kurs", b =>

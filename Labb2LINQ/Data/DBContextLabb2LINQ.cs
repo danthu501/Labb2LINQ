@@ -12,8 +12,7 @@ namespace Labb2LINQ.Data
         public DbSet<Student> Studenter { get; set; }
         public DbSet<Ämne> Ämnen { get; set; }
         public DbSet<Lärare> Lärare { get; set; }
-        public DbSet<ÄmneLärare> ÄmneLärares { get; set; }
-
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder.UseSqlServer("Data Source = DESKTOP-6TSF82P; Initial Catalog = Labb2LINQ; Integrated Security = True;"));
