@@ -4,14 +4,16 @@ using Labb2LINQ.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Labb2LINQ.Migrations
 {
     [DbContext(typeof(DBContextLabb2LINQ))]
-    partial class DBContextLabb2LINQModelSnapshot : ModelSnapshot
+    [Migration("20220309153212_ChangeTablesAgain3")]
+    partial class ChangeTablesAgain3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,31 +31,14 @@ namespace Labb2LINQ.Migrations
                     b.Property<string>("KursNamn")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("LärareID")
+                        .HasColumnType("int");
+
                     b.HasKey("KursId");
 
+                    b.HasIndex("LärareID");
+
                     b.ToTable("Kurser");
-                });
-
-            modelBuilder.Entity("Labb2LINQ.Model.KursÄmne", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("fKurserKursId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("fÄmneÄmneId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("fKurserKursId");
-
-                    b.HasIndex("fÄmneÄmneId");
-
-                    b.ToTable("KursÄmne");
                 });
 
             modelBuilder.Entity("Labb2LINQ.Model.Lärare", b =>
@@ -74,28 +59,6 @@ namespace Labb2LINQ.Migrations
                     b.ToTable("Lärare");
                 });
 
-            modelBuilder.Entity("Labb2LINQ.Model.LärareÄmne", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("LärareID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ÄmneId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LärareID");
-
-                    b.HasIndex("ÄmneId");
-
-                    b.ToTable("LärareÄmnen");
-                });
-
             modelBuilder.Entity("Labb2LINQ.Model.Student", b =>
                 {
                     b.Property<int>("StudentId")
@@ -110,6 +73,9 @@ namespace Labb2LINQ.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("KursId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("fKursenId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ÄmnenÄmneId")
@@ -131,34 +97,24 @@ namespace Labb2LINQ.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("LärareID")
+                        .HasColumnType("int");
+
                     b.Property<string>("ÄmneNamn")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ÄmneId");
 
+                    b.HasIndex("LärareID");
+
                     b.ToTable("Ämnen");
                 });
 
-            modelBuilder.Entity("Labb2LINQ.Model.KursÄmne", b =>
-                {
-                    b.HasOne("Labb2LINQ.Model.Kurs", "fKurser")
-                        .WithMany()
-                        .HasForeignKey("fKurserKursId");
-
-                    b.HasOne("Labb2LINQ.Model.Ämne", "fÄmne")
-                        .WithMany()
-                        .HasForeignKey("fÄmneÄmneId");
-                });
-
-            modelBuilder.Entity("Labb2LINQ.Model.LärareÄmne", b =>
+            modelBuilder.Entity("Labb2LINQ.Model.Kurs", b =>
                 {
                     b.HasOne("Labb2LINQ.Model.Lärare", "Lärare")
                         .WithMany()
                         .HasForeignKey("LärareID");
-
-                    b.HasOne("Labb2LINQ.Model.Ämne", "Ämne")
-                        .WithMany()
-                        .HasForeignKey("ÄmneId");
                 });
 
             modelBuilder.Entity("Labb2LINQ.Model.Student", b =>
@@ -170,6 +126,13 @@ namespace Labb2LINQ.Migrations
                     b.HasOne("Labb2LINQ.Model.Ämne", "Ämnen")
                         .WithMany()
                         .HasForeignKey("ÄmnenÄmneId");
+                });
+
+            modelBuilder.Entity("Labb2LINQ.Model.Ämne", b =>
+                {
+                    b.HasOne("Labb2LINQ.Model.Lärare", "Lärare")
+                        .WithMany("Ämnen")
+                        .HasForeignKey("LärareID");
                 });
 #pragma warning restore 612, 618
         }

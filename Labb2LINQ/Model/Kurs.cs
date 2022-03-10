@@ -10,10 +10,11 @@ namespace Labb2LINQ.Model
         {
             Studenter = new List<Student>();
         }
+
         public int KursId { get; set; }
         public string KursNamn { get; set; }
-        public Lärare Lärare { get; set; }
         public List<Student> Studenter { get; set; }
+        
 
        
 

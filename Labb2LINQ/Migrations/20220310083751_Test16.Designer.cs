@@ -4,14 +4,16 @@ using Labb2LINQ.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Labb2LINQ.Migrations
 {
     [DbContext(typeof(DBContextLabb2LINQ))]
-    partial class DBContextLabb2LINQModelSnapshot : ModelSnapshot
+    [Migration("20220310083751_Test16")]
+    partial class Test16
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,17 +43,20 @@ namespace Labb2LINQ.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("fKurserKursId")
+                    b.Property<int>("fCourseId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("fÄmneÄmneId")
+                    b.Property<int?>("fKursKursId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("fÄmneId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("fKurserKursId");
+                    b.HasIndex("fKursKursId");
 
-                    b.HasIndex("fÄmneÄmneId");
+                    b.HasIndex("fÄmneId");
 
                     b.ToTable("KursÄmne");
                 });
@@ -84,6 +89,12 @@ namespace Labb2LINQ.Migrations
                     b.Property<int?>("LärareID")
                         .HasColumnType("int");
 
+                    b.Property<int>("fLärare")
+                        .HasColumnType("int");
+
+                    b.Property<int>("fÄmne")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ÄmneId")
                         .HasColumnType("int");
 
@@ -110,6 +121,9 @@ namespace Labb2LINQ.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("KursId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("fKursenId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ÄmnenÄmneId")
@@ -141,13 +155,15 @@ namespace Labb2LINQ.Migrations
 
             modelBuilder.Entity("Labb2LINQ.Model.KursÄmne", b =>
                 {
-                    b.HasOne("Labb2LINQ.Model.Kurs", "fKurser")
+                    b.HasOne("Labb2LINQ.Model.Kurs", "fKurs")
                         .WithMany()
-                        .HasForeignKey("fKurserKursId");
+                        .HasForeignKey("fKursKursId");
 
                     b.HasOne("Labb2LINQ.Model.Ämne", "fÄmne")
                         .WithMany()
-                        .HasForeignKey("fÄmneÄmneId");
+                        .HasForeignKey("fÄmneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Labb2LINQ.Model.LärareÄmne", b =>

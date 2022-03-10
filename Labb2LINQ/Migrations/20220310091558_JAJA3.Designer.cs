@@ -4,14 +4,16 @@ using Labb2LINQ.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Labb2LINQ.Migrations
 {
     [DbContext(typeof(DBContextLabb2LINQ))]
-    partial class DBContextLabb2LINQModelSnapshot : ModelSnapshot
+    [Migration("20220310091558_JAJA3")]
+    partial class JAJA3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,6 +112,9 @@ namespace Labb2LINQ.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("KursId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("fKursenId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ÄmnenÄmneId")

@@ -4,14 +4,16 @@ using Labb2LINQ.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Labb2LINQ.Migrations
 {
     [DbContext(typeof(DBContextLabb2LINQ))]
-    partial class DBContextLabb2LINQModelSnapshot : ModelSnapshot
+    [Migration("20220310091441_JAJA2")]
+    partial class JAJA2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,17 +43,20 @@ namespace Labb2LINQ.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("fKurs")
+                        .HasColumnType("int");
+
                     b.Property<int?>("fKurserKursId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("fÄmneÄmneId")
+                    b.Property<int>("fÄmneId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("fKurserKursId");
 
-                    b.HasIndex("fÄmneÄmneId");
+                    b.HasIndex("fÄmneId");
 
                     b.ToTable("KursÄmne");
                 });
@@ -112,6 +117,9 @@ namespace Labb2LINQ.Migrations
                     b.Property<int?>("KursId")
                         .HasColumnType("int");
 
+                    b.Property<int>("fKursenId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ÄmnenÄmneId")
                         .HasColumnType("int");
 
@@ -147,7 +155,9 @@ namespace Labb2LINQ.Migrations
 
                     b.HasOne("Labb2LINQ.Model.Ämne", "fÄmne")
                         .WithMany()
-                        .HasForeignKey("fÄmneÄmneId");
+                        .HasForeignKey("fÄmneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Labb2LINQ.Model.LärareÄmne", b =>
