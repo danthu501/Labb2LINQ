@@ -9,8 +9,8 @@ namespace Labb2LINQ.Model
         public int StudentId { get; set; }
         public string Förnamn { get; set; }
         public string  Efternamn { get; set; }
-        //public int fKursenId { get; set; }
         public Ämne Ämnen { get; set; }
+        public Lärare Lärare { get; set; }
 
     }
 }
