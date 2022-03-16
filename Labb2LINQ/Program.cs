@@ -105,10 +105,8 @@ namespace Labb2LINQ
                         break;
                     case 2:
                         var GetStudents = from Student in Context.Studenter
-                                          join Ämne in Context.Ämnen on Student.Ämnen.ÄmneId equals Ämne.ÄmneId
-                                          join LärareÄmne in Context.LärareÄmnen on Ämne.ÄmneId equals LärareÄmne.Ämne.ÄmneId
-                                          join Lärare in Context.Lärare on LärareÄmne.Lärare.LärareID equals Lärare.LärareID
-                                                                                  
+                                          join Lärare in Context.Lärare on Student.Lärare.LärareID equals Lärare.LärareID
+
                                           select new { Student = Student.Förnamn + "\t" + Student.Efternamn, Lärare = Lärare.Förnamn + "\t" + Lärare.Efternamn };
 
                         foreach (var item in GetStudents)
@@ -159,28 +157,26 @@ namespace Labb2LINQ
                     case 5:
 
                         var EditStudent = (from Stud in Context.Studenter
-                                           join Ämne in Context.Ämnen on Stud.Ämnen.ÄmneId equals Ämne.ÄmneId
-                                           join LärareÄmne in Context.LärareÄmnen on Ämne.ÄmneId equals LärareÄmne.Ämne.ÄmneId
-                                           join Lärare in Context.Lärare on LärareÄmne.Lärare.LärareID equals Lärare.LärareID
-                                           join KursÄmne in Context.KursÄmne on Ämne.ÄmneId equals KursÄmne.fÄmne.ÄmneId
+                                           join Lärare in Context.Lärare on Stud.Lärare.LärareID equals Lärare.LärareID
+                                           join LärareÄmne in Context.Lärare on Lärare.LärareID equals LärareÄmne.LärareID
+                                           join Ämne in Context.LärareÄmnen on LärareÄmne.LärareID equals Ämne.Lärare.LärareID
+                                           join KursÄmne in Context.KursÄmne on Ämne.Ämne equals KursÄmne.fÄmne
                                            join Kurs in Context.Kurser on KursÄmne.fKurser.KursId equals Kurs.KursId
                                            where Stud.Lärare.Förnamn == "Anas"
-                                           select Stud.Lärare).FirstOrDefault();
-
+                                           select Stud).FirstOrDefault();
 
 
                         if (EditStudent != null)
                         {
-                            EditStudent.Förnamn = "Reidar";
+                            EditStudent.Lärare = new Lärare() { Förnamn = "Reidar", Efternamn ="Test"};
                             Console.WriteLine("Namnet har ändrats Från Anas till Reidar");
-
-
                         }
                         else
                         {
                             Console.WriteLine("Namnet Anas finns inte som lärare");
                         }
-
+                       
+                        
                         Context.SaveChanges();
                         Console.ReadKey();
                         Console.Clear();
