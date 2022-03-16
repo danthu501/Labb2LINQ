@@ -128,6 +128,7 @@ namespace Labb2LINQ
                         {
                             Console.WriteLine("{0} finns inte i tabellen", ContainsSubject);
                         }
+                        PrintAllsubjects(Context);
                         Console.ReadKey();
                         Console.Clear();
                         break;
@@ -151,17 +152,18 @@ namespace Labb2LINQ
 
                         }
                         Context.SaveChanges();
+                        PrintAllsubjects(Context);
                         Console.ReadKey();
                         Console.Clear();
                         break;
                     case 5:
 
                         var EditStudent = (from Stud in Context.Studenter
-                                           join Lärare in Context.Lärare on Stud.Lärare.LärareID equals Lärare.LärareID
-                                           join LärareÄmne in Context.Lärare on Lärare.LärareID equals LärareÄmne.LärareID
-                                           join Ämne in Context.LärareÄmnen on LärareÄmne.LärareID equals Ämne.Lärare.LärareID
-                                           join KursÄmne in Context.KursÄmne on Ämne.Ämne equals KursÄmne.fÄmne
-                                           join Kurs in Context.Kurser on KursÄmne.fKurser.KursId equals Kurs.KursId
+                                           //join Lärare in Context.Lärare on Stud.Lärare.LärareID equals Lärare.LärareID
+                                           //join LärareÄmne in Context.Lärare on Lärare.LärareID equals LärareÄmne.LärareID
+                                           //join Ämne in Context.LärareÄmnen on LärareÄmne.LärareID equals Ämne.Lärare.LärareID
+                                           //join KursÄmne in Context.KursÄmne on Ämne.Ämne equals KursÄmne.fÄmne
+                                           //join Kurs in Context.Kurser on KursÄmne.fKurser.KursId equals Kurs.KursId
                                            where Stud.Lärare.Förnamn == "Anas"
                                            select Stud).FirstOrDefault();
 
@@ -197,6 +199,17 @@ namespace Labb2LINQ
 
 
 
+        }
+        public static void PrintAllsubjects(DBContextLabb2LINQ Context)
+        {
+            var AllSubjects = from Ämne in Context.Ämnen
+                              select Ämne.ÄmneNamn;
+            Console.WriteLine("-------");
+            Console.WriteLine("Alla Ämnen:");
+            foreach (var item in AllSubjects)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
